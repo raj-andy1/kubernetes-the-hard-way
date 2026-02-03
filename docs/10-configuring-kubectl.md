@@ -33,20 +33,21 @@ Generate a kubeconfig file suitable for authenticating as the `admin` user:
 
 ```bash
 {
-  kubectl config set-cluster kubernetes-the-hard-way \
+  kubectl config set-cluster k8s \
     --certificate-authority=ca.crt \
     --embed-certs=true \
     --server=https://server.kubernetes.local:6443
 
   kubectl config set-credentials admin \
     --client-certificate=admin.crt \
-    --client-key=admin.key
+    --client-key=admin.key \
+    --embed-certs=true
 
-  kubectl config set-context kubernetes-the-hard-way \
-    --cluster=kubernetes-the-hard-way \
+  kubectl config set-context k8s \
+    --cluster=k8s \
     --user=admin
 
-  kubectl config use-context kubernetes-the-hard-way
+  kubectl config use-context k8s
 }
 ```
 The results of running the command above should create a kubeconfig file in the default location `~/.kube/config` used by the  `kubectl` commandline tool. This also means you can run the `kubectl` command without specifying a config.
