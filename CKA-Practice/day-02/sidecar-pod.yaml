@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+  name: sidecar-pod
+  namespace: cka-practice
+spec:
+  containers:
+  - image: busyboy
+    name: app
+    command: ['sh', '-c', 'while true; do date >> /var/log/app.log; sleep 5; done']
+    volumeMounts:
+    - mountPath: /var/log/
+      name: log-vol
+  - image: busybox
+    name: sidecar
+    command: ['sh', '-c', 'tail -f /var/log/app.log']
+    volumeMounts:
+    - mountPath: /var/log/
+      name: log-vol
+  volumes:
+  - name: log-vol
+    emptyDir: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+

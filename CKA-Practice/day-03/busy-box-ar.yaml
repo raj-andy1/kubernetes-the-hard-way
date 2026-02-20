@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-box-pod
+  namespace: cka-practice
+  labels:
+    app: busy-box-ar
+spec:
+  containers:
+  - name: busy-box-ar
+    image: busybox:latest
+    command: ["sleep"]
+    args: ["3600"]
+    
