@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: cm-env-pod
+  name: cm-env-pod
+  namespace: cka-practice-test-1
+spec:
+  containers:
+  - image: nginx
+    name: cm-env-pod
+    command: ["sh", "-c", "echo $MODE"]
+    envFrom:
+    - configMapRef:
+        name: app-config
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}

@@ -1,0 +1,11 @@
+#deploy a bad image
+apiVersion: v1
+kind: Pod
+metadata:
+    name: bad-image-testing
+    namespace: cka-practice
+spec:
+    containers:
+    - image: badbox
+      name: bad-image-testing
+    restartPolicy: Never

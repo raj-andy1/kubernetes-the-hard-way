@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  MODE: production
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: cka-practice-test-1

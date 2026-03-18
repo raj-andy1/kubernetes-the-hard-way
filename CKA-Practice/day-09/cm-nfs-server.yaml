@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  SHARED_DIRECTORY: /nfs-data
+kind: ConfigMap
+metadata:
+  name: nfs-server
+  namespace: cka-practice

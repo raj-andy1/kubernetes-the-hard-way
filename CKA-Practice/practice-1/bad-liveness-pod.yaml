@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: bad-liveness-pod
+  name: bad-liveness-pod
+  namespace: cka-practice-test-1
+spec:
+  containers:
+  - image: nginx
+    name: bad-liveness-pod
+    readinessProbe:
+     httpGet:
+       path: /badPath
+       port: 80
+     failureThreshold: 1
+     initialDelaySeconds: 10
+     periodSeconds: 10
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web-deploy
+  name: web-deploy
+  namespace: cka-practice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-deploy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: web-deploy
+    spec:
+      containers:
+      - image: nginx:1.9999999
+        name: nginx
+        resources: {}
+status: {}

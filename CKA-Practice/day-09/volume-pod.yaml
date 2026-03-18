@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: volume-pod
+  name: volume-pod
+  namespace: cka-practice
+spec:
+  containers:
+  - image: busybox
+    name: volume-pod
+    command: ['sh', '-c', 'while true; do date >> /data/log.txt; sleep 5; done']
+    volumeMounts:
+    - mountPath: /data
+      name: log-volume
+    resources: {}
+  volumes:
+  - name: log-volume
+    emptyDir:
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: qos-burstable
+    namespace: cka-practice
+spec:
+  containers:
+  - image: busybox
+    name: qos-burstable
+    command: ["sh", "-c"]
+    args: ["sleep 3600"]
+    resources: 
+      requests:
+        memory: "200Mi"
+        cpu: "700m" 
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always

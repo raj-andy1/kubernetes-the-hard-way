@@ -5,5 +5,10 @@ networking:
   disableDefaultCNI: true
 nodes:
 - role: control-plane
+  extraMounts:
+  - hostPath: /Users/araj/Documents/CursorProjects/kubernetes-the-hard-way/CKA-Practice/day-09/data
+    containerPath: /data
+  - hostPath: /Users/araj/Documents/CursorProjects/kubernetes-the-hard-way/CKA-Practice/day-09/nfs-data
+    containerPath: /nfs-data
 - role: worker
 - role: worker

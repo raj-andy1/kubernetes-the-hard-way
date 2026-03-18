@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: multi-volume-pod
+  name: multi-volume-pod
+  namespace: cka-practice
+spec:
+  containers:
+  - image: busybox
+    name: write-pod
+    command: ['sh', '-c', 'while true; do date >> /data/date.txt; sleep 5; done']
+    volumeMounts:
+    - mountPath: /data
+      name: rw-volume
+  - image: busybox
+    name: read-pod
+    command: ["sh", "-c", "tail -f /data/date.txt"]
+    volumeMounts:
+    - mountPath: /data
+      name: rw-volume
+    resources: {}
+  volumes:
+  - name: rw-volume
+    emtpyDir:
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
