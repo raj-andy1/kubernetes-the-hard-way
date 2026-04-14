@@ -1,0 +1,7 @@
+apiVersion: scheduling.k8s.io/v1
+description: priority class for databases
+kind: PriorityClass
+metadata:
+  name: database
+preemptionPolicy: PreemptLowerPriority
+value: 999999999

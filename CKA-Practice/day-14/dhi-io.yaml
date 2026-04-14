@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkaGkuaW8iOnsidXNlcm5hbWUiOiJyYWphbmR5MSIsInBhc3N3b3JkIjoiZGNrcl9wYXRfUHd5ZHRFSWlyamE4VU53WjRqRThwQmdVQl9FIiwiYXV0aCI6ImNtRnFZVzVrZVRFNlpHTnJjbDl3WVhSZlVIZDVaSFJGU1dseWFtRTRWVTUzV2pScVJUaHdRbWRWUWw5RiJ9fX0=
+kind: Secret
+metadata:
+  name: dhi-ip
+  namespace: cka-practice
+type: kubernetes.io/dockerconfigjson

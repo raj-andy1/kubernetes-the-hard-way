@@ -1,0 +1,11 @@
+NAME                                         CREATED AT
+ciliumcidrgroups.cilium.io                   2026-03-17T22:05:56Z
+ciliumclusterwidenetworkpolicies.cilium.io   2026-03-17T22:05:55Z
+ciliumendpoints.cilium.io                    2026-03-17T22:05:51Z
+ciliumidentities.cilium.io                   2026-03-17T22:05:49Z
+ciliuml2announcementpolicies.cilium.io       2026-03-17T22:05:58Z
+ciliumloadbalancerippools.cilium.io          2026-03-17T22:05:57Z
+ciliumnetworkpolicies.cilium.io              2026-03-17T22:05:53Z
+ciliumnodeconfigs.cilium.io                  2026-03-17T22:05:59Z
+ciliumnodes.cilium.io                        2026-03-17T22:05:52Z
+ciliumpodippools.cilium.io                   2026-03-17T22:05:50Z

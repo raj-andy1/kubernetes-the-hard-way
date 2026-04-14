@@ -1,0 +1,7 @@
+apiVersion: scheduling.k8s.io/v1
+description: priority class for backend nodes
+kind: PriorityClass
+metadata:
+  name: backend
+preemptionPolicy: PreemptLowerPriority
+value: 999999998

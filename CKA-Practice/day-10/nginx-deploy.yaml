@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: cka-exam-prep
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: nginx-config-env
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/templates/default.conf.template
+          subPath: default.conf.template
+          readOnly: true
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-svc
+  name: nginx-svc
+  namespace: cka-exam-prep
+spec:
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: nginx
+  type: ClusterIP
+---
+apiVersion: v1
+data:
+  default.conf.template: |-
+        server {
+            listen ${LISTEN_PORT};
+            server_name ${SERVER_NAME};
+            location / {
+                root /usr/share/nginx/html;
+                index index.html;
+            }
+        }
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: cka-exam-prep
+---
+apiVersion: v1
+data:
+  LISTEN_PORT: "80"
+  SERVER_NAME: rao-fam.com
+kind: ConfigMap
+metadata:
+  name: nginx-config-env
+  namespace: cka-exam-prep

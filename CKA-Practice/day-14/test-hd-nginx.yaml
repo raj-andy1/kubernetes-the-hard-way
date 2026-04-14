@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: hd-nginx-2
+  name: hd-nginx-2
+  namespace: cka-practice
+spec:
+  imagePullSecrets:
+    - name: dhi-ip
+  containers:
+  - image: dhi.io/nginx:1-debian13-dev
+    name: hd-nginx-2
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

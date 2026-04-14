@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-hostpath-pvc
+  namespace: cka-practice
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-large
+  resources:
+    requests:
+      storage: 5Gi

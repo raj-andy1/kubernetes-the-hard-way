@@ -1,0 +1,10 @@
+server {
+    listen ${HTTPS_PORT:-443} ssl;
+    server_name ${SERVER_NAME};
+
+    ssl_protocols ${TLS_VERSIONS:-TLSv1.2 TLSv1.3};
+    ssl_ciphers ${TLS_CIPHERS:-HIGH:!aNULL:!MD5};
+
+    ssl_certificate /etc/nginx/ssl/tls.crt;
+    ssl_certificate_key /etc/nginx/ssl/tls.key;
+}

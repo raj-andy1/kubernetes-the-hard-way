@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-ssl
+  name: nginx-ssl
+  namespace: cka-exam-prep
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-ssl
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx-ssl
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-ssl
+        ports:
+        - containerPort: 8443
+        envFrom:
+        - configMapRef:
+            name: nginx-ssl-config-env
+        volumeMounts:
+        - name: nginx-ssl-config
+          mountPath: /etc/nginx/templates/default.conf.template
+          subPath: default.conf.template
+          readOnly: true
+        - name: nginx-ssl-secrets
+          mountPath: /etc/nginx/ssl
+      volumes:
+      - name: nginx-ssl-secrets
+        secret:
+          secretName: nginx-ssl-secrets
+      - name: nginx-ssl-config
+        configMap:
+          name: nginx-ssl-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ssl-svc
+  namespace: cka-exam-prep
+spec:
+  ports:
+  - name: 443-8443
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    app: nginx-ssl
+  type: ClusterIP
+---
+apiVersion: v1
+data:
+  HTTPS_PORT: "8443"
+  TLS_VERSIONS: TLSv1.2, TLSv1.3
+  TLS_CIPHERS: HIGH:!aNULL:!MD5
+  SERVER_NAME: rao-fam.com
+kind: ConfigMap
+metadata:
+  name: nginx-ssl-config-env
+  namespace: cka-exam-prep
+---
+apiVersion: v1
+data:
+  default.conf.template: |
+    server {
+        listen ${HTTPS_PORT} ssl;
+        server_name ${SERVER_NAME};
+
+        ssl_protocols ${TLS_VERSIONS};
+        ssl_ciphers ${TLS_CIPHERS};
+
+        ssl_certificate /etc/nginx/ssl/tls.crt;
+        ssl_certificate_key /etc/nginx/ssl/tls.key;
+    }
+kind: ConfigMap
+metadata:
+  name: nginx-ssl-config
+  namespace: cka-exam-prep

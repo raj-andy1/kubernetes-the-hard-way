@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: logmon
+  name: logmon
+  namespace: logfiles
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: logmon
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: logmon
+    spec:
+      containers:
+      - image: lfcert/monitor:latest
+        name: monitor
+        resources: {}
+status: {}

@@ -1,0 +1,25 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: apache
+  namespace: cka-exam-prep
+spec:
+  maxReplicas: 4
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageValue: 50m
+        type: AverageValue
+    type: Resource
+  minReplicas: 1
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 30
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: apache
+status:
+  currentMetrics: null
+  desiredReplicas: 0

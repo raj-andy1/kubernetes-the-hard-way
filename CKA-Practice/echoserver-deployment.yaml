@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: echoserver-deployment
+  name: echoserver-deployment
+  namespace: echo-sound
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echoserver-deployment
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: echoserver-deployment
+    spec:
+      containers:
+      - image: ealen/echo-server:1.0.0
+        name: echo-server
+        ports:
+          - containerPort: 8080
+        resources: {}
+status: {}

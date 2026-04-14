@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    role: backend
+  name: sample-app-backend
+  namespace: sample-app-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        role: backend
+    spec:
+      containers:
+      - image: rajandy1/sample-app-backend:latest
+        name: sample-app-backend
+        env:
+        - name: DB_NAME
+          valueFrom: 
+            secretKeyRef:
+              name: database-secrets
+              key: POSTGRES_DB
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: POSTGRES_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: POSTGRES_PASSWORD
+        - name: DB_HOST
+          value: database-service.database.svc.cluster.local
+        - name: DB_PORT
+          value: "5432"
+        ports:
+        - containerPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    role: frontend
+  name: sample-app-frontend
+  namespace: sample-app-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        role: frontend
+    spec:
+      containers:
+      - image: rajandy1/sample-app-frontend:latest
+        name: sample-app-frontend
+        ports:
+        - containerPort: 8501
+        env:
+        - name: BACKEND_URL
+          value: "http://backend-svc.sample-app-backend.svc.cluster.local:8000"
+        resources: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-network-policy
+  namespace: sample-app-backend
+spec: 
+  podSelector:
+    matchLabels:
+      role: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: backend-svc
+  name: backend-svc
+  namespace: sample-app-backend
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    role: backend
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontend-svc
+  name: frontend-svc
+  namespace: sample-app-frontend
+spec:
+  ports:
+  - port: 8501
+    protocol: TCP
+    targetPort: 8501
+  selector:
+    role: frontend
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: database-secrets
+  namespace: sample-app-backend
+data:
+  POSTGRES_USER: YXBwdXNlcg== 
+  POSTGRES_PASSWORD: YXBwUGFzc3dvcmQ=
+  POSTGRES_DB: YXBwREI=
