@@ -9,13 +9,13 @@ The commands in this section must be run from the `jumpbox`.
 Copy the Kubernetes binaries and systemd unit files to each worker instance:
 
 ```bash
-for HOST in node-0 node-1; do
+for HOST in k8s-node-0 k8s-node-1; do
   scp configs/kubelet-config.yaml root@${HOST}:~/
 done
 ```
 
 ```bash
-for HOST in node-0 node-1; do
+for HOST in k8s-node-0 k8s-node-1; do
   scp \
     downloads/worker/* \
     downloads/client/kubectl \
@@ -30,17 +30,17 @@ done
 ```
 
 ```bash
-for HOST in node-0 node-1; do
+for HOST in k8s-node-0 k8s-node-1; do
   scp \
     downloads/cni-plugins/* \
     root@${HOST}:~/cni-plugins/
 done
 ```
 
-The commands in the next section must be run on each worker instance: `node-0`, `node-1`. Login to the worker instance using the `ssh` command. Example:
+The commands in the next section must be run on each worker instance: `k8s-node-0`, `k8s-node-1`. Login to the worker instance using the `ssh` command. Example:
 
 ```bash
-ssh root@node-0
+ssh root@k8s-node-0
 ```
 
 ## Provisioning a Kubernetes Worker Node
@@ -176,7 +176,7 @@ systemctl is-active kubelet
 active
 ```
 
-Be sure to complete the steps in this section on each worker node, `node-0` and `node-1`, before moving on to the next section.
+Be sure to complete the steps in this section on each worker node, `k8s-node-0` and `k8s-node-1`, before moving on to the next section.
 
 ## Verification
 
@@ -192,8 +192,8 @@ ssh root@k8s-controller \
 
 ```
 NAME     STATUS   ROLES    AGE    VERSION
-node-0   Ready    <none>   1m     v1.32.3
-node-1   Ready    <none>   10s    v1.32.3
+k8s-node-0   Ready    <none>   1m     v1.32.3
+k8s-node-1   Ready    <none>   10s    v1.32.3
 ```
 
 Next: [Configuring kubectl for Remote Access](10-configuring-kubectl.md)
