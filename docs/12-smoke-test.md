@@ -16,7 +16,7 @@ kubectl create secret generic kubernetes-the-hard-way \
 Print a hexdump of the `kubernetes-the-hard-way` secret stored in etcd:
 
 ```bash
-ssh root@server \
+ssh root@k8s-controller \
     'etcdctl get /registry/secrets/default/kubernetes-the-hard-way | hexdump -C'
 ```
 

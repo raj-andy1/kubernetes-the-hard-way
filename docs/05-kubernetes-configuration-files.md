@@ -19,7 +19,7 @@ for host in node-0 node-1; do
   kubectl config set-cluster k8s-the-hard-way \
     --certificate-authority=ca.crt \
     --embed-certs=true \
-    --server=https://server.kubernetes.local:6443 \
+    --server=https://k8s-controller.k8s.local:6443 \
     --kubeconfig=${host}.kubeconfig
 
   kubectl config set-credentials system:node:${host} \
@@ -54,7 +54,7 @@ Generate a kubeconfig file for the `kube-proxy` service:
   kubectl config set-cluster k8s-the-hard-way \
     --certificate-authority=ca.crt \
     --embed-certs=true \
-    --server=https://server.kubernetes.local:6443 \
+    --server=https://k8s-controller.k8s.local:6443 \
     --kubeconfig=kube-proxy.kubeconfig
 
   kubectl config set-credentials system:kube-proxy \
@@ -88,7 +88,7 @@ Generate a kubeconfig file for the `kube-controller-manager` service:
   kubectl config set-cluster k8s-the-hard-way \
     --certificate-authority=ca.crt \
     --embed-certs=true \
-    --server=https://server.kubernetes.local:6443 \
+    --server=https://k8s-controller.k8s.local:6443 \
     --kubeconfig=kube-controller-manager.kubeconfig
 
   kubectl config set-credentials system:kube-controller-manager \
@@ -123,7 +123,7 @@ Generate a kubeconfig file for the `kube-scheduler` service:
   kubectl config set-cluster k8s-the-hard-way \
     --certificate-authority=ca.crt \
     --embed-certs=true \
-    --server=https://server.kubernetes.local:6443 \
+    --server=https://k8s-controller.k8s.local:6443 \
     --kubeconfig=kube-scheduler.kubeconfig
 
   kubectl config set-credentials system:kube-scheduler \
@@ -198,13 +198,13 @@ for host in node-0 node-1; do
 done
 ```
 
-Copy the `kube-controller-manager` and `kube-scheduler` kubeconfig files to the `server` machine:
+Copy the `kube-controller-manager` and `kube-scheduler` kubeconfig files to the `k8s-controller` machine:
 
 ```bash
 scp admin.kubeconfig \
   kube-controller-manager.kubeconfig \
   kube-scheduler.kubeconfig \
-  root@server:~/
+  root@k8s-controller:~/
 ```
 
 Next: [Generating the Data Encryption Config and Key](06-data-encryption-keys.md)

@@ -185,7 +185,7 @@ Run the following commands from the `jumpbox` machine.
 List the registered Kubernetes nodes:
 
 ```bash
-ssh root@server \
+ssh root@k8s-controller \
   "kubectl get nodes \
   --kubeconfig admin.kubeconfig"
 ```

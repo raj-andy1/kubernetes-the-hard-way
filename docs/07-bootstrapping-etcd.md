@@ -4,20 +4,20 @@ Kubernetes components are stateless and store cluster state in [etcd](https://gi
 
 ## Prerequisites
 
-Copy `etcd` binaries and systemd unit files to the `server` machine:
+Copy `etcd` binaries and systemd unit files to the `k8s-controller` machine:
 
 ```bash
 scp \
   downloads/controller/etcd \
   downloads/client/etcdctl \
   units/etcd.service \
-  root@server:~/
+  root@k8s-controller:~/
 ```
 
-The commands in this lab must be run on the `server` machine. Login to the `server` machine using the `ssh` command. Example:
+The commands in this lab must be run on the `k8s-controller` machine. Login to the `k8s-controller` machine using the `ssh` command. Example:
 
 ```bash
-ssh root@server
+ssh root@k8s-controller
 ```
 
 ## Bootstrapping an etcd Cluster

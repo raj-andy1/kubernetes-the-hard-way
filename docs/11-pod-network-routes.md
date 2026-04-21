@@ -14,7 +14,7 @@ Print the internal IP address and Pod CIDR range for each worker instance:
 
 ```bash
 {
-  SERVER_IP=$(grep server machines.txt | cut -d " " -f 1)
+  SERVER_IP=$(grep k8s-controller machines.txt | cut -d " " -f 1)
   NODE_0_IP=$(grep node-0 machines.txt | cut -d " " -f 1)
   NODE_0_SUBNET=$(grep node-0 machines.txt | cut -d " " -f 4)
   NODE_1_IP=$(grep node-1 machines.txt | cut -d " " -f 1)
@@ -23,7 +23,7 @@ Print the internal IP address and Pod CIDR range for each worker instance:
 ```
 
 ```bash
-ssh root@server <<EOF
+ssh root@k8s-controller <<EOF
   ip route add ${NODE_0_SUBNET} via ${NODE_0_IP}
   ip route add ${NODE_1_SUBNET} via ${NODE_1_IP}
 EOF
@@ -44,7 +44,7 @@ EOF
 ## Verification 
 
 ```bash
-ssh root@server ip route
+ssh root@k8s-controller ip route
 ```
 
 ```text
